@@ -502,6 +502,7 @@
         }
 
         function createCuteEmoji() {
+			if (document.hidden) return;
             const emoji = document.createElement('div');
             emoji.className = 'cute-float';
             const cuteEmojis = ['❤️','💖','💗','💘','💝','💕','🥰','😘','🌸','🌷','🦋','✨','🫶','💞'];
@@ -515,10 +516,11 @@
         }
 
         function launchCuteEmojis() {
-            for (let i = 0; i < 50; i++) setTimeout(() => createCuteEmoji(), i * 30);
+            for (let i = 0; i < 20; i++) setTimeout(() => createCuteEmoji(), i * 30);
         }
 
         function createPetal() {
+			if (document.hidden) return;	
             const petal = document.createElement('div');
             petal.className = 'petal';
             const petals = ['🌸', '🌷', '🌺'];
@@ -531,10 +533,11 @@
         }
 
         function launchPetals() {
-            for (let i = 0; i < 35; i++) setTimeout(() => createPetal(), i * 50);
+            for (let i = 0; i < 15; i++) setTimeout(() => createPetal(), i * 50);
         }
 
         function createButterfly() {
+			if (document.hidden) return;
             const butterfly = document.createElement('div');
             butterfly.className = 'butterfly';
             butterfly.textContent = '🦋';
@@ -546,10 +549,11 @@
         }
 
         function launchButterflies() {
-            for (let i = 0; i < 18; i++) setTimeout(() => createButterfly(), i * 120);
+            for (let i = 0; i < 12; i++) setTimeout(() => createButterfly(), i * 120);
         }
 
         function createStar() {
+			if (document.hidden) return;
             const star = document.createElement('div');
             star.className = 'cute-float';
             star.textContent = '✨';
@@ -564,16 +568,32 @@
             for (let i = 0; i < 25; i++) setTimeout(() => createStar(), i * 60);
         }
 
-        setInterval(() => { if (Math.random() > 0.5) createCuteEmoji(); }, 200);
-        setInterval(() => { if (Math.random() > 0.6) createPetal(); }, 280);
-        setInterval(() => { if (Math.random() > 0.65) createButterfly(); }, 450);
-        setInterval(() => { if (Math.random() > 0.7) createStar(); }, 350);
+        // === ОПТИМИЗИРОВАННЫЕ АНИМАЦИИ (для мобильных) ===
+		setInterval(() => {
+			if (document.hidden) return;
+			if (Math.random() > 0.75) createCuteEmoji();
+		}, 600);
+
+		setInterval(() => {
+			if (document.hidden) return;
+			if (Math.random() > 0.8) createPetal();
+		}, 800);
+
+		setInterval(() => {
+			if (document.hidden) return;
+			if (Math.random() > 0.85) createButterfly();
+		}, 1200);
+
+		setInterval(() => {
+			if (document.hidden) return;
+			if (Math.random() > 0.9) createStar();
+		}, 1000);
 
         document.addEventListener('click', () => {
-            if (Math.random() > 0.3) {
-                for (let i = 0; i < 12; i++) setTimeout(createCuteEmoji, i * 25);
-            }
-        });
+			if (Math.random() > 0.85) {     // было 0.3
+				createCuteEmoji();          // создаём только 1 элемент
+			}
+		});
 
         // === КНОПКА "МОЯ ЛЮБОВЬ К ТЕБЕ" ===
         function showGrowingHeart() {
@@ -741,7 +761,7 @@
         }
 
         function launchConfetti() {
-            for (let i = 0; i < 90; i++) {
+            for (let i = 0; i < 25; i++) {
                 setTimeout(() => {
                     const c = document.createElement('div');
                     c.className = 'cute-float';
@@ -764,10 +784,10 @@
         setInterval(() => { if (Math.random() > 0.7) createStar(); }, 350);
 
         document.addEventListener('click', () => {
-            if (Math.random() > 0.3) {
-                for (let i = 0; i < 12; i++) setTimeout(createCuteEmoji, i * 25);
-            }
-        });
+			if (Math.random() > 0.85) {     // было 0.3
+				createCuteEmoji();          // создаём только 1 элемент
+			}
+		});
 
         
 
