@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Открытка для Ариночки ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&amp;family=Poppins:wght@300;400;600&amp;display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+	<style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&amp;family=Poppins:wght@300;400;600&amp;display=swap');
+        /* ========== ВСТАВЬ СЮДА (ПЛАВНЫЙ ПЕРЕХОД) ========== */
+		body,
+		#postcard,
+		button,
+		.text-pink-600,
+		.text-pink-500,
+		.text-pink-700 {
+			transition: background-color 0.4s ease, 
+						color 0.4s ease, 
+						border-color 0.4s ease,
+						box-shadow 0.4s ease;
+		}
+		/* =================================================== */
+		body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffe4f3 0%, #fdf4ff 50%, #ffe4f3 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .cute-float {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+            animation: cuteFloat linear forwards;
+        }
+        @keyframes cuteFloat {
+            0% { transform: translateY(100vh) scale(0.5) rotate(-15deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-140vh) scale(1.5) rotate(30deg); opacity: 0; }
+        }
+        .petal { position: absolute; pointer-events: none; z-index: 5; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+        .butterfly { position: absolute; pointer-events: none; z-index: 8; animation: fly linear forwards; }
+        @keyframes fly { 0% { transform: translateY(100vh) rotate(-25deg); } 100% { transform: translateY(-120vh) rotate(40deg); } }
+        .modal-photo {
+            transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.4);
+        }
+		/* ========== ВСТАВЬ СЮДА (В КОНЕЦ СТИЛЕЙ) ========== */
+		body.dark-theme {
+			background: linear-gradient(135deg, #2c1810 0%, #1a0f0a 50%, #2c1810 100%);
+		}
+
+		body.dark-theme #postcard {
+			background: rgba(40, 20, 15, 0.95);
+			border-color: #5c2e1f;
+		}
+
+		body.dark-theme .text-pink-600,
+		body.dark-theme .text-pink-500,
+		body.dark-theme .text-rose-600 {
+			color: #f8d7d7 !important;
+		}
+
+		body.dark-theme .text-pink-700 {
+			color: #f5c6c6 !important;
+		}
+
+		body.dark-theme button {
+			box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3);
+		}
+
+		body.dark-theme .bg-white\/70,
+		body.dark-theme .bg-white\/80 {
+			background: rgba(50, 25, 20, 0.7) !important;
+			border-color: #5c2e1f !important;
+		}
+		/* =================================================== */
+		/* === КРАСИВЫЙ КУРСОР === */
+		#customCursor {
+			transition: transform 0.1s ease;
+			filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+		}
+
+		body.custom-cursor {
+			cursor: none;
+		}
+		/* === МОБИЛЬНАЯ АДАПТАЦИЯ === */
+		@media (max-width: 768px) {
+			
+			button {
+				padding: 18px 24px !important;
+				font-size: 17px !important;
+				min-height: 56px;
+			}
+
+			.fixed.inset-0 {
+				padding: 0 !important;
+			}
+			
+			.fixed.inset-0 > div {
+				margin: 0 !important;
+				border-radius: 0 !important;
+				max-height: 100vh !important;
+				width: 100% !important;
+				max-width: 100% !important;
+			}
+
+			.modal-photo,
+			#complimentText,
+			#loveReasonText,
+			#predictionText {
+				font-size: 18px !important;
+				line-height: 1.5 !important;
+			}
+
+			#constellationCanvas {
+				max-width: 100%;
+				height: auto;
+			}
+		}
+    </style>
+</head>
+<body class="min-h-screen">
+	<!-- Кастомный курсор -->
+    <div id="customCursor" 
+         class="fixed pointer-events-none z-[99999] text-3xl transition-transform duration-100"
+         style="display: none;">
+        ❤️
+    </div>
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+        <!-- КОНВЕРТ -->
+        <div id="envelope" class="envelope max-w-md w-full bg-white rounded-3xl shadow-2xl p-12 cursor-pointer border-8 border-pink-200 text-center">
+            <div class="text-8xl mb-8">💌</div>
+            <h1 class="text-6xl font-bold text-pink-600 mb-4">Для моей Ариночки</h1>
+            <p class="text-pink-500 text-3xl">Нажми, чтобы открыть ❤️</p>
+        </div>
+
+        <!-- ОТКРЫТАЯ ОТКРЫТКА -->
+        <div id="postcard" class="hidden max-w-5xl w-full bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-12 border-8 border-pink-300">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="text-8xl mb-6">❤️</div>
+                <h1 class="text-7xl font-bold text-pink-600 mb-4" style="font-family: 'Dancing Script', cursive;">Моя Ариночка</h1>
+                <p class="text-pink-500 text-2xl mb-10">Самая любимая девочка на свете ✨</p>
+				<!-- Счётчики дней -->
+				<div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+					
+					<!-- Знакомы -->
+					<div class="bg-white/80 backdrop-blur-sm border border-pink-200 rounded-2xl px-6 py-4 text-center shadow-sm">
+						<div class="text-pink-500 text-sm font-medium tracking-wider">МЫ ЗНАКОМЫ УЖЕ</div>
+						<div class="flex items-center justify-center gap-2 mt-1">
+							<span id="daysKnown" class="text-4xl font-bold text-pink-600">0</span>
+							<span class="text-pink-500 text-xl">дней</span>
+						</div>
+						<div class="text-xs text-pink-400 mt-1">с 22 апреля 2026</div>
+					</div>
+
+					<!-- В отношениях -->
+					<div class="bg-white/80 backdrop-blur-sm border border-rose-200 rounded-2xl px-6 py-4 text-center shadow-sm">
+						<div class="text-rose-500 text-sm font-medium tracking-wider">В ОТНОШЕНИЯХ УЖЕ</div>
+						<div class="flex items-center justify-center gap-2 mt-1">
+							<span id="daysTogether" class="text-4xl font-bold text-rose-600">0</span>
+							<span class="text-rose-500 text-xl">дней</span>
+						</div>
+						<div class="text-xs text-rose-400 mt-1">с 2 июня 2026 ❤️</div>
+					</div>
+
+				</div>
+                <img src="attachments/love_9.jpg" 
+					 onclick="showComplimentOnPhotoClick(this)"
+					 class="w-96 h-96 mx-auto rounded-3xl object-cover shadow-2xl mb-12 border-4 border-pink-200 cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+					 alt="Арина">
+				<!-- === НАШЕ СОЗВЕЗДИЕ === -->
+				<div class="my-12 text-center">
+					<h2 class="text-3xl font-bold text-pink-600 mb-2" style="font-family: 'Dancing Script', cursive;">
+						Наше созвездие
+					</h2>
+					<p class="text-pink-500 mb-6">Две звезды, которые нашли друг друга ❤️</p>
+					
+					<canvas id="constellationCanvas" width="600" height="400" 
+							class="mx-auto rounded-3xl border border-pink-200 shadow-xl cursor-pointer"></canvas>
+					
+					<p class="text-pink-400 text-sm mt-4">Нажми на созвездие, чтобы звёзды засияли ярче</p>
+				</div>
+				<!-- ========== ИНТЕРАКТИВНОЕ СЕРДЦЕ ========== -->
+                <div class="my-8 flex flex-col items-center">
+                    <div onclick="interactWithHeart(this)"
+                         class="text-[130px] md:text-[160px] cursor-pointer select-none transition-all duration-300 hover:scale-105"
+                         id="interactiveHeart">
+                        ❤️
+                    </div>
+                    <p class="text-pink-400 text-sm mt-1 tracking-wider">Нажми на сердце</p>
+                </div>
+				<!-- ========== "СКОЛЬКО РАЗ Я ДУМАЛ О ТЕБЕ" ========== -->
+                <div class="my-8 text-center">
+                    <div class="inline-block bg-white/70 backdrop-blur-sm border border-pink-200 rounded-2xl px-8 py-5 shadow-sm">
+                        <p class="text-pink-500 text-sm tracking-[1px]">СЕГОДНЯ Я ДУМАЛ О ТЕБЕ</p>
+                        <div class="flex items-baseline justify-center gap-2 mt-1">
+                            <span id="thoughtsCount" class="text-6xl font-bold text-pink-600">0</span>
+                            <span class="text-pink-500 text-2xl">раз</span>
+                        </div>
+                        <p class="text-pink-400 text-xs mt-2">и с каждой минутой всё чаще ❤️</p>
+                    </div>
+                </div>
+                <div class="mb-14 text-pink-700 italic text-2xl leading-relaxed max-w-3xl mx-auto">
+					Моя нежная зайка, моё солнышко ясное,<br>
+					Ты в сердце моём поселилась навсегда.<br>
+					Твои глазки — как звёздочки самые ясные,<br>
+					А улыбка твоя — это сладкая награда.<br><br>
+
+					Ты — моя лапочка, моя радость большая,<br>
+					С тобой даже дождь превращается в сказку.<br>
+					Ты делаешь мир таким добрым и нежным,<br>
+					Что хочется верить в волшебство и удачу.<br><br>
+
+					Каждое утро я рад быть с тобою,<br>
+					Что именно ты рядом со мною.<br>
+					Ты — самое милое, самое родное,<br>
+					Ты — моя любимая, ты — моя.<br><br>
+
+					Я буду беречь тебя, греть и ласкать,<br>
+					Буду шептать тебе нежные слова.<br>
+					Ты — моя маленькая, моя хорошая,<br>
+					Ты — моя вечная, самая любимая.<br><br>
+
+					Пусть в твоих глазках всегда будет счастье,<br>
+					Пусть в твоём сердце живёт только любовь.<br>
+					Я так сильно тебя люблю, моя зайка,<br>
+					Больше, чем можно сказать словами.
+				</div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
+                    <button onclick="sendKiss()" class="bg-pink-500 hover:bg-pink-600 text-white px-14 py-6 rounded-3xl text-xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-xl">
+                        <span class="text-4xl">😘</span>
+                        <span>Поцеловать Арину</span>
+                    </button>
+                    <button onclick="showMyZaykaGallery()" class="bg-purple-500 hover:bg-purple-600 text-white px-14 py-6 rounded-3xl text-xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-xl">
+                        <span class="text-4xl">💕</span>
+                        <span>Любимая</span>
+                    </button>
+                    <button onclick="showTogetherGallery()" class="bg-rose-500 hover:bg-rose-600 text-white px-14 py-6 rounded-3xl text-xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-xl">
+                        <span class="text-4xl">💞</span>
+                        <span>Вместе с любимой</span>
+                    </button>
+                    <!-- Кнопка "Моя любовь к тебе" -->
+                    <button onclick="showGrowingHeart()"
+                            class="bg-red-500 hover:bg-red-600 text-white px-14 py-6 rounded-3xl text-xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-xl">
+                        <span class="text-4xl">❤️</span>
+                        <span>Моя любовь к тебе</span>
+                    </button>
+                    
+					<button onclick="startMiniGame()"
+							class="bg-indigo-500 hover:bg-indigo-600 text-white px-14 py-6 rounded-3xl text-xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-xl">
+						<span class="text-4xl">🎮</span>
+						<span>Мини игра</span>
+					</button>
+
+					<!-- НОВАЯ КНОПКА ГЕНЕРАТОРА КОМПЛИМЕНТОВ -->
+					<button onclick="showComplimentGenerator()"
+							class="bg-amber-400 hover:bg-amber-500 text-white px-14 py-6 rounded-3xl text-xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-xl">
+						<span class="text-4xl">✨</span>
+						<span>Скажи мне что-нибудь приятное</span>
+					</button>
+					
+					<!-- ========== НОВАЯ КНОПКА "ПОЧЕМУ Я ТЕБЯ ЛЮБЛЮ" ========== -->
+					<button onclick="showWhyILoveYou()"
+							class="bg-pink-600 hover:bg-pink-700 text-white px-14 py-6 rounded-3xl text-xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-xl">
+						<span class="text-4xl">💖</span>
+						<span>Почему я тебя люблю</span>
+                    </button>
+					<!-- ========== НОВАЯ КНОПКА "ОБНИМИ МЕНЯ" ========== -->
+					<button onclick="triggerHugEffect()"
+							class="bg-rose-500 hover:bg-rose-600 text-white px-14 py-6 rounded-3xl text-xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-xl">
+						<span class="text-4xl">🤗</span>
+						<span>Обними меня</span>
+					</button>
+					<button onclick="showFuturePrediction()"
+							class="bg-violet-500 hover:bg-violet-600 text-white px-14 py-6 rounded-3xl text-xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-xl">
+						<span class="text-4xl">🔮</span>
+						<span>Наше будущее</span>
+					</button>
+					<!-- ========== НОВАЯ КНОПКА ГОЛОСОВОГО СООБЩЕНИЯ ========== -->
+					<button onclick="playVoiceMessage()"
+							class="bg-rose-600 hover:bg-rose-700 text-white px-14 py-6 rounded-3xl text-xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-xl">
+						<span class="text-4xl">🎙️</span>
+						<span>Послушай моё голосовое</span>
+					</button>
+					<!-- ========== ВСТАВЬ СЮДА КНОПКУ ТЁМНОЙ ТЕМЫ ========== -->
+					<button id="themeToggle"
+							class="group flex items-center gap-3 px-8 py-4 rounded-3xl text-lg font-medium transition-all active:scale-[0.985] shadow-xl
+								   bg-zinc-900 hover:bg-black text-white border border-zinc-700 hover:border-zinc-600">
+						<span id="themeIcon" class="text-2xl transition-transform group-active:rotate-12">🌙</span>
+						<span id="themeText" class="font-medium">Тёмная тема</span>
+					</button>
+					<button onclick="savePostcard()"
+							class="bg-emerald-500 hover:bg-emerald-600 text-white px-14 py-6 rounded-3xl text-xl font-medium flex items-center gap-3 mx-auto transition-all active:scale-95 shadow-xl">
+						<span class="text-4xl">📸</span>
+						<span>Сохранить открытку</span>
+					</button>
+					
+					<!-- ===================================================== -->
+					<div class="mt-14 pt-8 border-t border-pink-200 text-center">
+						<p class="text-pink-500 text-base">Сделано с бесконечной нежностью</p>
+						<p class="text-pink-400 text-sm mt-1">для самой любимой девочки на свете ❤️</p>
+                    <div class="mt-3 text-pink-300 text-xs">Твой Саша • Июнь 2026</div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модалки -->
+    <div id="zaykaModal" onclick="closeZaykaModal()" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+        <div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-4xl w-full p-8 shadow-2xl relative">
+            <h2 class="text-5xl font-bold text-pink-600 text-center mb-6" style="font-family: 'Dancing Script', cursive;">Моя зайка</h2>
+            <div class="relative flex justify-center mb-6">
+                <img id="zaykaImage" class="modal-photo max-w-full max-h-[65vh] object-contain rounded-3xl cursor-pointer" onclick="nextZaykaPhoto()">
+            </div>
+            <div class="flex justify-center gap-4">
+                <button onclick="nextZaykaPhoto()" class="bg-pink-500 hover:bg-pink-600 text-white px-10 py-3 rounded-2xl">Следующее →</button>
+                <button onclick="closeZaykaModal()" class="bg-gray-200 hover:bg-gray-300 text-pink-600 px-10 py-3 rounded-2xl">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="togetherModal" onclick="closeTogetherModal()" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+        <div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-4xl w-full p-8 shadow-2xl relative">
+            <h2 class="text-5xl font-bold text-rose-600 text-center mb-6" style="font-family: 'Dancing Script', cursive;">Вместе с любимой</h2>
+            <div class="relative flex justify-center mb-6">
+                <img id="togetherImage" class="modal-photo max-w-full max-h-[65vh] object-contain rounded-3xl cursor-pointer" onclick="nextTogetherPhoto()">
+            </div>
+            <div class="flex justify-center gap-4">
+                <button onclick="nextTogetherPhoto()" class="bg-rose-500 hover:bg-rose-600 text-white px-10 py-3 rounded-2xl">Следующее →</button>
+                <button onclick="closeTogetherModal()" class="bg-gray-200 hover:bg-gray-300 text-rose-600 px-10 py-3 rounded-2xl">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модалка "Моя любовь к тебе" -->
+    <div id="growingHeartModal" onclick="closeGrowingHeartModal()" class="hidden fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4">
+        <div onclick="event.stopImmediatePropagation()" class="text-center">
+            <div id="growingHeart"
+                 class="growing-heart text-[120px] md:text-[170px] cursor-pointer select-none"
+                 style="transition: transform 4.2s cubic-bezier(0.25, 0.1, 0.25, 1);">
+                ❤️
+            </div>
+            <p class="mt-6 text-white text-2xl font-medium">Моя любовь к тебе становится всё больше и больше...</p>
+        </div>
+    </div>
+
+    <!-- НОВАЯ МОДАЛКА С МИНИ-ИГРОЙ -->
+    <div id="gameModal" onclick="closeGameModal()" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+        <div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl w-full max-w-[720px] p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-3xl font-bold text-pink-600">Мы вместе преодолеваем трудности ❤️</h2>
+                <button onclick="closeGameModal()" class="text-3xl text-pink-400 hover:text-pink-600">✕</button>
+            </div>
+            
+            <canvas id="gameCanvas" width="680" height="380" class="border-4 border-pink-200 rounded-2xl bg-gradient-to-b from-pink-50 to-white mx-auto"></canvas>
+            
+			<div class="flex justify-between items-center mt-4">
+				<div>
+					<div class="text-xl font-medium text-pink-600">
+						Пройдено: <span id="score" class="font-bold text-2xl">0</span>
+					</div>
+					<div class="text-sm text-pink-400">
+						Рекорд: <span id="bestScoreDisplay">0</span>
+					</div>
+				</div>
+				<button onclick="restartGame()" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-2xl">Начать заново</button>
+			</div>
+        </div>
+    </div>
+	<!-- Модалка Генератора Комплиментов -->
+	<div id="complimentModal" onclick="closeComplimentModal()" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+		<div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl text-center">
+			<div class="text-6xl mb-4">💌</div>
+			<h2 class="text-3xl font-bold text-pink-600 mb-6" style="font-family: 'Dancing Script', cursive;">Для тебя, моя зайка</h2>
+			
+			<div id="complimentText" 
+				 class="text-pink-700 text-xl leading-relaxed mb-8 min-h-[100px] flex items-center justify-center px-4">
+				<!-- Здесь будет появляться комплимент -->
+			</div>
+
+			<div class="flex flex-col gap-3">
+				<button onclick="generateNewCompliment()" 
+						class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-2xl text-lg font-medium transition-all active:scale-95">
+					Ещё комплимент ✨
+				</button>
+				<button onclick="closeComplimentModal()" 
+						class="bg-gray-200 hover:bg-gray-300 text-pink-600 px-8 py-3 rounded-2xl text-lg font-medium transition-all">
+					Закрыть
+				</button>
+			</div>
+		</div>
+	</div>
+	<!-- Модалка "Почему я тебя люблю" -->
+	<div id="whyILoveModal" onclick="closeWhyILoveModal()" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+		<div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-lg w-full p-8 shadow-2xl text-center">
+			
+			<div class="text-6xl mb-4">💗</div>
+			<h2 class="text-3xl font-bold text-pink-600 mb-2" style="font-family: 'Dancing Script', cursive;">Почему я тебя люблю</h2>
+			<p class="text-pink-500 mb-6">Для моей Ариночки</p>
+
+			<div id="loveReasonText" 
+				 class="text-pink-700 text-2xl leading-relaxed min-h-[120px] flex items-center justify-center px-4 mb-8">
+				<!-- Здесь будет появляться причина -->
+			</div>
+
+			<div class="flex flex-col gap-3">
+				<button onclick="showNextLoveReason()" 
+						class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-2xl text-lg font-medium transition-all active:scale-95">
+					Следующая причина ❤️
+				</button>
+				<button onclick="closeWhyILoveModal()" 
+						class="bg-gray-200 hover:bg-gray-300 text-pink-600 px-8 py-3 rounded-2xl text-lg font-medium transition-all">
+					Закрыть
+				</button>
+			</div>
+		</div>
+	</div>
+	<!-- Модалка Генератора "Наше будущее" -->
+	<div id="futurePredictionModal" onclick="closeFuturePredictionModal()" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+		<div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl text-center">
+			
+			<div class="text-6xl mb-4">🔮</div>
+			<h2 class="text-3xl font-bold text-violet-600 mb-2" style="font-family: 'Dancing Script', cursive;">Наше будущее</h2>
+			<p class="text-violet-500 mb-6">Что ждёт нас впереди...</p>
+
+			<div id="predictionText" 
+				 class="text-violet-700 text-2xl leading-relaxed min-h-[140px] flex items-center justify-center px-4 mb-8">
+				<!-- Здесь будет появляться предсказание -->
+			</div>
+
+			<div class="flex flex-col gap-3">
+				<button onclick="generateNewPrediction()" 
+						class="bg-violet-500 hover:bg-violet-600 text-white px-8 py-3 rounded-2xl text-lg font-medium transition-all active:scale-95">
+					Ещё одно предсказание ✨
+				</button>
+				<button onclick="closeFuturePredictionModal()" 
+						class="bg-gray-200 hover:bg-gray-300 text-violet-600 px-8 py-3 rounded-2xl text-lg font-medium transition-all">
+					Закрыть
+				</button>
+			</div>
+		</div>
+	</div>
+
+    <audio id="bgMusic" loop>
+		<source src="Charli XCX - Track10 [Official Audio].mp3" type="audio/mpeg">
+	</audio>
+		<audio id="voiceMessage" preload="auto">
+		<source src="attachments/voice_message.mp3" type="audio/mpeg">
+		Твой браузер не поддерживает аудио.
+	</audio>
+	
+
+    <script>
+        // === ВЕСЬ ТВОЙ ПРЕДЫДУЩИЙ КОД ОСТАЁТСЯ БЕЗ ИЗМЕНЕНИЙ ===
+        const envelope = document.getElementById('envelope');
+        const postcard = document.getElementById('postcard');
+        const music = document.getElementById('bgMusic');
+		
+		
+
+        envelope.addEventListener('click', () => {
+			// Анимация "открытия" конверта
+			envelope.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 1, 1)';
+			envelope.style.transform = 'scale(0.9) translateY(-30px)';
+			envelope.style.opacity = '0';
+
+			// Вылетают сердечки во время открытия
+			createEnvelopeOpenHearts();
+
+			setTimeout(() => {
+				envelope.style.display = 'none';
+				postcard.style.display = 'block';
+				postcard.style.opacity = '0';
+				postcard.style.transform = 'translateY(30px)';
+
+				// Плавное появление открытки
+				setTimeout(() => {
+					postcard.style.transition = 'all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)';
+					postcard.style.opacity = '1';
+					postcard.style.transform = 'translateY(0)';
+				}, 50);
+
+				launchConfetti();
+				launchAllCuteAnimations();
+
+				// Музыка
+				music.currentTime = 20;
+				music.volume = 0.05;
+				music.play().catch(() => {});
+
+			}, 500);
+		});
+        function launchAllCuteAnimations() {
+            launchCuteEmojis();
+            launchPetals();
+            launchButterflies();
+            launchStars();
+        }
+
+        function createCuteEmoji() {
+            const emoji = document.createElement('div');
+            emoji.className = 'cute-float';
+            const cuteEmojis = ['❤️','💖','💗','💘','💝','💕','🥰','😘','🌸','🌷','🦋','✨','🫶','💞'];
+            emoji.textContent = cuteEmojis[Math.floor(Math.random() * cuteEmojis.length)];
+            emoji.style.fontSize = `${Math.random() * 1.7 + 1.6}rem`;
+            emoji.style.left = `${Math.random() * 100}vw`;
+            emoji.style.bottom = `-60px`;
+            emoji.style.animationDuration = `${Math.random() * 7 + 8.5}s`;
+            document.body.appendChild(emoji);
+            setTimeout(() => emoji.remove(), 17000);
+        }
+
+        function launchCuteEmojis() {
+            for (let i = 0; i < 50; i++) setTimeout(() => createCuteEmoji(), i * 30);
+        }
+
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            const petals = ['🌸', '🌷', '🌺'];
+            petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+            petal.style.left = `${Math.random() * 100}vw`;
+            petal.style.fontSize = `${Math.random() * 1.6 + 1.8}rem`;
+            petal.style.animationDuration = `${Math.random() * 9 + 11}s`;
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), 22000);
+        }
+
+        function launchPetals() {
+            for (let i = 0; i < 35; i++) setTimeout(() => createPetal(), i * 50);
+        }
+
+        function createButterfly() {
+            const butterfly = document.createElement('div');
+            butterfly.className = 'butterfly';
+            butterfly.textContent = '🦋';
+            butterfly.style.left = `${Math.random() * 100}vw`;
+            butterfly.style.fontSize = `${Math.random() * 1.4 + 2}rem`;
+            butterfly.style.animationDuration = `${Math.random() * 12 + 14}s`;
+            document.body.appendChild(butterfly);
+            setTimeout(() => butterfly.remove(), 28000);
+        }
+
+        function launchButterflies() {
+            for (let i = 0; i < 18; i++) setTimeout(() => createButterfly(), i * 120);
+        }
+
+        function createStar() {
+            const star = document.createElement('div');
+            star.className = 'cute-float';
+            star.textContent = '✨';
+            star.style.left = `${Math.random() * 100}vw`;
+            star.style.fontSize = `${Math.random() * 1.2 + 1.3}rem`;
+            star.style.animationDuration = `${Math.random() * 8 + 9}s`;
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 18000);
+        }
+
+        function launchStars() {
+            for (let i = 0; i < 25; i++) setTimeout(() => createStar(), i * 60);
+        }
+
+        setInterval(() => { if (Math.random() > 0.5) createCuteEmoji(); }, 200);
+        setInterval(() => { if (Math.random() > 0.6) createPetal(); }, 280);
+        setInterval(() => { if (Math.random() > 0.65) createButterfly(); }, 450);
+        setInterval(() => { if (Math.random() > 0.7) createStar(); }, 350);
+
+        document.addEventListener('click', () => {
+            if (Math.random() > 0.3) {
+                for (let i = 0; i < 12; i++) setTimeout(createCuteEmoji, i * 25);
+            }
+        });
+
+        // === КНОПКА "МОЯ ЛЮБОВЬ К ТЕБЕ" ===
+        function showGrowingHeart() {
+            const modal = document.getElementById('growingHeartModal');
+            const heart = document.getElementById('growingHeart');
+           
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+           
+            heart.style.transition = 'none';
+            heart.style.transform = 'scale(0.6)';
+           
+            setTimeout(() => {
+                heart.style.transition = 'transform 4.2s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                heart.style.transform = 'scale(4.2)';
+               
+                setTimeout(() => {
+                    closeGrowingHeartModal();
+                }, 4300);
+            }, 50);
+        }
+
+        function closeGrowingHeartModal() {
+            const modal = document.getElementById('growingHeartModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // === Остальные функции (showPhotoWithEffect, галереи, sendKiss и т.д.) ===
+        function showPhotoWithEffect(imgElement, src) {
+			// Плавно убираем текущее фото
+			imgElement.style.transition = 'all 0.4s ease';
+			imgElement.style.opacity = '0';
+			imgElement.style.transform = 'scale(0.7) rotate(-12deg)';
+
+			setTimeout(() => {
+				imgElement.src = src;
+
+				// Красивое появление нового фото
+				imgElement.style.transition = 'all 0.85s cubic-bezier(0.34, 1.56, 0.64, 1)';
+				imgElement.style.opacity = '1';
+				imgElement.style.transform = 'scale(1) rotate(0deg)';
+
+				// Вылетают милые сердечки и бабочки
+				launchPhotoAppearEffect(imgElement);
+			}, 380);
+		}
+
+        function launchPhotoAppearEffect(imgElement) {
+			const rect = imgElement.getBoundingClientRect();
+			const centerX = rect.left + rect.width / 2;
+			const centerY = rect.top + rect.height / 2;
+
+			const effects = ['❤️', '💖', '💗', '🦋', '✨'];
+
+			for (let i = 0; i < 14; i++) {
+				setTimeout(() => {
+					const el = document.createElement('div');
+					el.className = 'cute-float';
+					el.textContent = effects[Math.floor(Math.random() * effects.length)];
+					el.style.left = `${centerX + (Math.random() * 180 - 90)}px`;
+					el.style.top = `${centerY + (Math.random() * 140 - 70)}px`;
+					el.style.fontSize = `${Math.random() * 1.4 + 1.1}rem`;
+					el.style.animationDuration = `${Math.random() * 2.8 + 2.2}s`;
+					document.body.appendChild(el);
+
+					setTimeout(() => el.remove(), 5200);
+				}, i * 28);
+			}
+		}
+		function createPhotoClickEffect(img) {
+			const rect = img.getBoundingClientRect();
+			const centerX = rect.left + rect.width / 2;
+			const centerY = rect.top + rect.height / 2;
+
+			for (let i = 0; i < 20; i++) {
+				setTimeout(() => {
+					const el = document.createElement('div');
+					el.className = 'cute-float';
+					el.textContent = ['❤️','💖','💗','🦋','✨'][Math.floor(Math.random()*5)];
+					el.style.left = `${centerX + (Math.random() * 200 - 100)}px`;
+					el.style.top = `${centerY + (Math.random() * 160 - 80)}px`;
+					el.style.fontSize = `${Math.random() * 1.6 + 1.3}rem`;
+					document.body.appendChild(el);
+					setTimeout(() => el.remove(), 4500);
+				}, i * 25);
+			}
+		}
+
+        const zaykaPhotos = ["attachments/ari_1.jpg","attachments/ari_2.jpg","attachments/ari_3.jpg","attachments/ari_4.jpg","attachments/ari_5.jpg","attachments/ari_6.jpg","attachments/ari_7.jpg"];
+        let currentZayka = 0;
+        let zaykaTimer = null;
+
+        function showMyZaykaGallery() {
+            const modal = document.getElementById('zaykaModal');
+            currentZayka = 0;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            showZaykaPhoto();
+            clearInterval(zaykaTimer);
+            zaykaTimer = setInterval(nextZaykaPhoto, 3000);
+        }
+
+        function showZaykaPhoto() {
+            const img = document.getElementById('zaykaImage');
+            showPhotoWithEffect(img, zaykaPhotos[currentZayka]);
+        }
+
+        function nextZaykaPhoto() {
+            currentZayka = (currentZayka + 1) % zaykaPhotos.length;
+            showZaykaPhoto();
+        }
+
+        function closeZaykaModal() {
+            document.getElementById('zaykaModal').classList.add('hidden');
+            document.getElementById('zaykaModal').classList.remove('flex');
+            clearInterval(zaykaTimer);
+        }
+
+        const togetherPhotos = ["attachments/love_1.jpg","attachments/love_2.jpg","attachments/love_3.jpg","attachments/love_4.jpg","attachments/love_5.jpg","attachments/love_6.jpg","attachments/love_7.jpg","attachments/love_8.jpg"];
+        let currentTogether = 0;
+        let togetherTimer = null;
+
+        function showTogetherGallery() {
+            const modal = document.getElementById('togetherModal');
+            currentTogether = 0;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            showTogetherPhoto();
+            clearInterval(togetherTimer);
+            togetherTimer = setInterval(nextTogetherPhoto, 3000);
+        }
+
+        function showTogetherPhoto() {
+            const img = document.getElementById('togetherImage');
+            showPhotoWithEffect(img, togetherPhotos[currentTogether]);
+        }
+
+        function nextTogetherPhoto() {
+            currentTogether = (currentTogether + 1) % togetherPhotos.length;
+            showTogetherPhoto();
+        }
+
+        function closeTogetherModal() {
+            document.getElementById('togetherModal').classList.add('hidden');
+            document.getElementById('togetherModal').classList.remove('flex');
+            clearInterval(togetherTimer);
+        }
+
+        function sendKiss() {
+            const kiss = document.createElement('div');
+            kiss.style.cssText = 'position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10000;text-align:center;';
+            kiss.innerHTML = `
+                <img src="attachments/love_9.jpg" style="width:380px;height:380px;object-fit:cover;border-radius:50%;border:10px solid #ff69b4;box-shadow:0 0 60px rgba(255,105,180,0.7);">
+                <div style="position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);font-size:140px;">😘</div>
+            `;
+            document.body.appendChild(kiss);
+            setTimeout(() => {
+                kiss.style.transition = 'all 1.6s ease';
+                kiss.style.transform = 'translate(-50%, -75%) scale(0.5)';
+                kiss.style.opacity = '0';
+            }, 1400);
+            setTimeout(() => kiss.remove(), 3200);
+            for (let i = 0; i < 45; i++) setTimeout(createCuteEmoji, i * 18);
+        }
+
+        function launchConfetti() {
+            for (let i = 0; i < 90; i++) {
+                setTimeout(() => {
+                    const c = document.createElement('div');
+                    c.className = 'cute-float';
+                    c.textContent = ['💖','🌸','🦋','✨','🥰'][Math.floor(Math.random()*5)];
+                    c.style.cssText = `position:fixed;left:${Math.random()*100}vw;top:-70px;font-size:2.2rem;z-index:20;`;
+                    document.body.appendChild(c);
+                    setTimeout(() => {
+                        c.style.transition = 'all 5.5s linear';
+                        c.style.top = '120vh';
+                        c.style.transform = `rotate(${Math.random()*1000}deg)`;
+                    }, 30);
+                    setTimeout(() => c.remove(), 5800);
+                }, i * 8);
+            }
+        }
+
+        setInterval(() => { if (Math.random() > 0.5) createCuteEmoji(); }, 200);
+        setInterval(() => { if (Math.random() > 0.6) createPetal(); }, 280);
+        setInterval(() => { if (Math.random() > 0.65) createButterfly(); }, 450);
+        setInterval(() => { if (Math.random() > 0.7) createStar(); }, 350);
+
+        document.addEventListener('click', () => {
+            if (Math.random() > 0.3) {
+                for (let i = 0; i < 12; i++) setTimeout(createCuteEmoji, i * 25);
+            }
+        });
+
+        
+
+
+		// === МИНИ-ИГРА (Delta Time + Рекорд) - ИСПРАВЛЕННАЯ ВЕРСИЯ ===
+		let gameCanvas, ctx;
+		let gameRunning = false;
+		let animationFrame = null;
+		let lastTime = 0;
+
+		let playerY = 280;
+		let velocity = 0;
+		let obstacles = [];
+		let score = 0;
+		let frame = 0;
+
+		const BASE_SPEED = 5;
+		const BASE_GRAVITY = 0.75;
+		const BASE_JUMP = -14.5;
+
+		let bestScore = localStorage.getItem('bestScore') ? parseInt(localStorage.getItem('bestScore')) : 0;
+
+		function startMiniGame() {
+			const modal = document.getElementById('gameModal');
+			modal.classList.remove('hidden');
+			modal.classList.add('flex');
+
+			gameCanvas = document.getElementById('gameCanvas');
+			ctx = gameCanvas.getContext('2d');
+
+			if (!gameRunning) {
+				resetGame();
+				
+				// Обновляем рекорд при открытии
+				const bestDisplay = document.getElementById('bestScoreDisplay');
+				if (bestDisplay) bestDisplay.innerText = bestScore;
+
+				gameRunning = true;
+				lastTime = performance.now();
+				if (animationFrame) cancelAnimationFrame(animationFrame);
+				animationFrame = requestAnimationFrame(gameLoop);
+			}
+
+			document.onkeydown = handleJump;
+			gameCanvas.onclick = handleJump;
+		}
+
+		function handleJump(e) {
+			if (!gameRunning) return;
+			if ((e.key === ' ' || e.type === 'click') && playerY >= 280) {
+				velocity = BASE_JUMP;
+				createJumpEffect();
+			}
+		}
+
+		function resetGame() {
+			playerY = 280;
+			velocity = 0;
+			obstacles = [];
+			score = 0;
+			frame = 0;
+			document.getElementById('score').innerText = '0';
+
+			const bestDisplay = document.getElementById('bestScoreDisplay');
+			if (bestDisplay) bestDisplay.innerText = bestScore;
+		}
+
+		function gameLoop(currentTime) {
+			if (!gameRunning) return;
+
+			const deltaTime = currentTime - lastTime;
+			lastTime = currentTime;
+			const delta = deltaTime / 16.67;
+
+			ctx.clearRect(0, 0, 680, 380);
+
+			// Фон
+			const gradient = ctx.createLinearGradient(0, 0, 0, 320);
+			gradient.addColorStop(0, '#ffe4f3');
+			gradient.addColorStop(1, '#fdf4ff');
+			ctx.fillStyle = gradient;
+			ctx.fillRect(0, 0, 680, 320);
+
+			ctx.fillStyle = '#f9d5e5';
+			ctx.fillRect(0, 320, 680, 60);
+
+			// Игрок
+			ctx.font = '52px serif';
+			ctx.fillText('👫', 80, playerY + 52);
+
+			// Физика
+			playerY += velocity * delta;
+			velocity += BASE_GRAVITY * delta;
+
+			if (playerY > 280) {
+				playerY = 280;
+				velocity = 0;
+			}
+
+			// Препятствия
+			if (frame % 62 === 0) {
+				obstacles.push({ x: 680, y: 292 });
+			}
+
+			for (let i = obstacles.length - 1; i >= 0; i--) {
+				const obs = obstacles[i];
+				obs.x -= BASE_SPEED * delta;
+
+				ctx.font = '40px serif';
+				ctx.fillText('🌵', obs.x, obs.y);
+
+				if (obs.x < 125 && obs.x > 55 && playerY > 242) {
+					gameOver();
+					return;
+				}
+
+				if (obs.x < -50) {
+					obstacles.splice(i, 1);
+					score++;
+					document.getElementById('score').innerText = score;
+				}
+			}
+
+			frame++;
+			animationFrame = requestAnimationFrame(gameLoop);
+		}
+
+		function gameOver() {
+			gameRunning = false;
+			if (animationFrame) cancelAnimationFrame(animationFrame);
+
+			if (score > bestScore) {
+				bestScore = score;
+				localStorage.setItem('bestScore', bestScore);
+			}
+
+			ctx.fillStyle = 'rgba(0,0,0,0.85)';
+			ctx.fillRect(0, 0, 680, 380);
+
+			ctx.fillStyle = 'white';
+			ctx.font = 'bold 36px Dancing Script';
+			ctx.fillText('Вы преодолели трудности вместе!', 95, 140);
+
+			ctx.font = '26px Poppins';
+			ctx.fillText(`Пройдено: ${score} трудностей ❤️`, 220, 195);
+
+			ctx.fillStyle = '#ff69b4';
+			ctx.font = 'bold 32px Poppins';
+			ctx.fillText(`🏆 Рекорд: ${bestScore}`, 230, 260);
+
+			ctx.fillStyle = '#ddd';
+			ctx.font = '22px Poppins';
+			ctx.fillText('Нажми на экран или кнопку, чтобы начать заново', 155, 320);
+
+			// Клик по экрану тоже перезапускает игру
+			gameCanvas.onclick = restartGame;
+		}
+
+		function restartGame() {
+			if (animationFrame) {
+				cancelAnimationFrame(animationFrame);
+				animationFrame = null;
+			}
+
+			resetGame();
+			gameRunning = true;
+			lastTime = performance.now();
+
+			// === ВАЖНО: возвращаем обработчики прыжка ===
+			document.onkeydown = handleJump;
+			gameCanvas.onclick = handleJump;
+
+			animationFrame = requestAnimationFrame(gameLoop);
+		}
+
+		function closeGameModal() {
+			const modal = document.getElementById('gameModal');
+			modal.classList.add('hidden');
+			modal.classList.remove('flex');
+			gameRunning = false;
+			if (animationFrame) cancelAnimationFrame(animationFrame);
+		}
+
+		function createJumpEffect() {
+			for (let i = 0; i < 6; i++) {
+				setTimeout(() => {
+					const heart = document.createElement('div');
+					heart.className = 'cute-float';
+					heart.textContent = '💗';
+					heart.style.left = `${90 + (Math.random() * 40)}px`;
+					heart.style.top = `${playerY + 30}px`;
+					heart.style.fontSize = '18px';
+					heart.style.animationDuration = '1.2s';
+					document.body.appendChild(heart);
+					setTimeout(() => heart.remove(), 1500);
+				}, i * 40);
+			}
+		}
+		// === ГЕНЕРАТОР НЕЖНЫХ КОМПЛИМЕНТОВ ===
+		const compliments = [
+			"Ты — самое нежное и светлое, что есть в моей жизни.",
+			"С тобой даже обычный день становится самым счастливым.",
+			"Твоя улыбка — это моё самое любимое зрелище на свете.",
+			"Ты — моя личная порция счастья каждый день.",
+			"Когда ты рядом, мир становится добрее и красивее.",
+			"Ты — моя самая любимая причина просыпаться по утрам.",
+			"Твои глазки — это два маленьких кусочка неба, которые я очень люблю.",
+			"Ты делаешь меня лучше просто тем, что существуешь.",
+			"С тобой я хочу быть самым нежным и заботливым человеком на земле.",
+			"Ты — моя самая любимая история, которую я хочу рассказывать всю жизнь.",
+			"Каждый раз, когда ты улыбаешься, у меня внутри всё тает.",
+			"Ты — моё самое красивое «случайно» в жизни.",
+			"Я не знаю, как мне повезло встретить именно тебя, но я очень благодарен за это.",
+			"Ты — моя любимая причина быть счастливым каждый день.",
+			"С тобой даже тишина становится уютной и тёплой."
+		];
+
+		let currentComplimentIndex = -1;
+
+		function showComplimentGenerator() {
+			const modal = document.getElementById('complimentModal');
+			modal.classList.remove('hidden');
+			modal.classList.add('flex');
+			generateNewCompliment();
+		}
+
+		function generateNewCompliment() {
+			const textElement = document.getElementById('complimentText');
+			
+			let newIndex;
+			do {
+				newIndex = Math.floor(Math.random() * compliments.length);
+			} while (newIndex === currentComplimentIndex && compliments.length > 1);
+			
+			currentComplimentIndex = newIndex;
+			
+			textElement.style.transition = 'all 0.3s ease';
+			textElement.style.opacity = '0';
+			
+			setTimeout(() => {
+				textElement.innerHTML = compliments[newIndex];
+				textElement.style.opacity = '1';
+			}, 250);
+		}
+
+		function closeComplimentModal() {
+			const modal = document.getElementById('complimentModal');
+			modal.classList.add('hidden');
+			modal.classList.remove('flex');
+		}
+		// === СЧЁТЧИКИ ДНЕЙ ВМЕСТЕ ===
+		function updateDaysCounter() {
+			// Дата знакомства: 22 апреля 2026
+			const knownDate = new Date(2026, 3, 22); // Месяцы начинаются с 0 (апрель = 3)
+			
+			// Дата начала отношений: 2 июня 2026
+			const togetherDate = new Date(2026, 5, 2); // Июнь = 5
+
+			const today = new Date();
+
+			// Считаем дни знакомства
+			const diffKnown = Math.floor((today - knownDate) / (1000 * 60 * 60 * 24));
+			document.getElementById('daysKnown').innerText = diffKnown;
+
+			// Считаем дни в отношениях
+			const diffTogether = Math.floor((today - togetherDate) / (1000 * 60 * 60 * 24));
+			document.getElementById('daysTogether').innerText = diffTogether;
+		}
+
+		// Запускаем счётчик при загрузке страницы
+		updateDaysCounter();
+		
+		// === ПОЧЕМУ Я ТЕБЯ ЛЮБЛЮ ===
+		const loveReasons = [
+			"За твою невероятную улыбку, от которой у меня тает сердце.",
+			"За твою доброту и нежность, которые ты даришь мне каждый день.",
+			"За то, что с тобой даже самые обычные дни становятся особенными.",
+			"За твои глаза — в них я вижу своё самое большое счастье.",
+			"За то, что ты всегда поддерживаешь меня и веришь в меня.",
+			"За твою искренность и то, что ты никогда не притворяешься.",
+			"За то, как ты смеёшься — это самый красивый звук на свете.",
+			"За то, что ты моя любимая причина просыпаться по утрам.",
+			"За твою заботу и то, как ты обо мне беспокоишься.",
+			"За то, что ты делаешь меня лучше просто тем, что ты есть.",
+			"За то, что я хочу провести с тобой всю свою жизнь."
+		];
+
+		let currentLoveReasonIndex = 0;
+
+		function showWhyILoveYou() {
+			const modal = document.getElementById('whyILoveModal');
+			modal.classList.remove('hidden');
+			modal.classList.add('flex');
+			
+			currentLoveReasonIndex = 0;
+			showCurrentLoveReason();
+		}
+
+		function showCurrentLoveReason() {
+			const textElement = document.getElementById('loveReasonText');
+			textElement.style.transition = 'all 0.4s ease';
+			textElement.style.opacity = '0';
+
+			setTimeout(() => {
+				textElement.innerHTML = loveReasons[currentLoveReasonIndex];
+				textElement.style.opacity = '1';
+			}, 200);
+		}
+
+		function showNextLoveReason() {
+			currentLoveReasonIndex = (currentLoveReasonIndex + 1) % loveReasons.length;
+			showCurrentLoveReason();
+		}
+
+		function closeWhyILoveModal() {
+			const modal = document.getElementById('whyILoveModal');
+			modal.classList.add('hidden');
+			modal.classList.remove('flex');
+		}
+		
+		// === КНОПКА "ОБНИМИ МЕНЯ" ===
+		function triggerHugEffect() {
+			const hugEmojis = ['🤗', '🫂', '💕', '❤️', '💗', '🥰'];
+			
+			// Создаём 40 обнимашек
+			for (let i = 0; i < 40; i++) {
+				setTimeout(() => {
+					const hug = document.createElement('div');
+					
+					// Используем position: fixed, чтобы элементы точно были видны
+					hug.style.position = 'fixed';
+					hug.style.left = `${Math.random() * 100}vw`;
+					hug.style.bottom = `-60px`;
+					hug.style.fontSize = `${Math.random() * 2.2 + 2.2}rem`;
+					hug.style.zIndex = '99999';
+					hug.style.pointerEvents = 'none';
+					hug.style.transition = `all ${Math.random() * 2.5 + 3.5}s linear`;
+					hug.textContent = hugEmojis[Math.floor(Math.random() * hugEmojis.length)];
+					
+					document.body.appendChild(hug);
+					
+					// Запускаем анимацию разлёта
+					setTimeout(() => {
+						hug.style.bottom = `${100 + Math.random() * 40}vh`;
+						hug.style.transform = `translateX(${Math.random() * 200 - 100}px) rotate(${Math.random() * 60 - 30}deg)`;
+						hug.style.opacity = '0';
+					}, 50);
+					
+					// Удаляем элемент после анимации
+					setTimeout(() => {
+						hug.remove();
+					}, 7500);
+					
+				}, i * 18);
+			}
+			
+			// Показываем текст "Обнимаю тебя"
+			showHugMessage();
+		}
+
+		function showHugMessage() {
+			const message = document.createElement('div');
+			message.style.cssText = `
+				position: fixed;
+				top: 45%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background: rgba(255, 255, 255, 0.95);
+				color: #e11d48;
+				padding: 18px 45px;
+				border-radius: 9999px;
+				font-size: 26px;
+				font-weight: 600;
+				box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+				z-index: 99999;
+				text-align: center;
+				pointer-events: none;
+				white-space: nowrap;
+			`;
+			message.innerHTML = `Обнимаю тебя крепко-крепко 🤗`;
+			
+			document.body.appendChild(message);
+			
+			setTimeout(() => {
+				message.style.transition = 'all 1.2s ease';
+				message.style.opacity = '0';
+				
+				setTimeout(() => {
+					message.remove();
+				}, 1200);
+			}, 2000);
+		}
+		// === ГЕНЕРАТОР "НАШЕ БУДУЩЕЕ" ===
+		const futurePredictions = [
+			"Через 5 лет мы будем путешествовать по Китаю вдвоём.",
+			"Мы заведём котёнка или щенка вместе.",
+			"Даже через много лет мы будем самой милой парой.",
+			"Через пару лет мы будем вместе встречать рассветы на море.",
+			"мы вместе построим что-то большое и важное.",
+			"Нас ждёт много путешествий и новых стран.",
+			"Через года мы будем ещё сильнее любить друг друга.",
+			"Через несколько лет мы будем вместе готовить завтраки по выходным.",
+			"Мы станем ещё ближе и нежнее друг к другу с каждым годом.",
+			"Нас ждёт много смеха, объятий и счастливых моментов.",
+		];
+
+		let currentPredictionIndex = -1;
+
+		function showFuturePrediction() {
+			const modal = document.getElementById('futurePredictionModal');
+			modal.classList.remove('hidden');
+			modal.classList.add('flex');
+			generateNewPrediction();
+		}
+
+		function generateNewPrediction() {
+			const textElement = document.getElementById('predictionText');
+			
+			let newIndex;
+			do {
+				newIndex = Math.floor(Math.random() * futurePredictions.length);
+			} while (newIndex === currentPredictionIndex && futurePredictions.length > 1);
+			
+			currentPredictionIndex = newIndex;
+			
+			textElement.style.transition = 'all 0.3s ease';
+			textElement.style.opacity = '0';
+			
+			setTimeout(() => {
+				textElement.innerHTML = futurePredictions[newIndex];
+				textElement.style.opacity = '1';
+			}, 200);
+		}
+
+		function closeFuturePredictionModal() {
+			const modal = document.getElementById('futurePredictionModal');
+			modal.classList.add('hidden');
+			modal.classList.remove('flex');
+		}
+		// === КЛИК ПО ФОТО АРИНЫ = СЛУЧАЙНЫЙ КОМПЛИМЕНТ ===
+		function showComplimentOnPhotoClick(imgElement) {
+			// Показываем сердечки (оставляем текущий эффект)
+			createPhotoClickEffect(imgElement);
+			
+			// Показываем случайный комплимент
+			showRandomComplimentToast();
+		}
+
+		function showRandomComplimentToast() {
+			// Используем уже существующий массив комплиментов
+			const randomIndex = Math.floor(Math.random() * compliments.length);
+			const compliment = compliments[randomIndex];
+			
+			const toast = document.createElement('div');
+			toast.style.cssText = `
+				position: fixed;
+				top: 35%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background: rgba(255, 255, 255, 0.95);
+				color: #db2777;
+				padding: 20px 35px;
+				border-radius: 24px;
+				font-size: 22px;
+				font-weight: 500;
+				box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+				z-index: 99999;
+				text-align: center;
+				max-width: 420px;
+				pointer-events: none;
+				border: 3px solid #fce7f3;
+			`;
+			toast.innerHTML = `💗 ${compliment}`;
+			
+			document.body.appendChild(toast);
+			
+			// Плавное исчезновение
+			setTimeout(() => {
+				toast.style.transition = 'all 1.3s ease';
+				toast.style.opacity = '0';
+				
+				setTimeout(() => {
+					toast.remove();
+				}, 1300);
+			}, 2800);
+		}
+		// === ИНТЕРАКТИВНОЕ СЕРДЦЕ ===
+		function interactWithHeart(heartElement) {
+			// 1. Анимация увеличения сердца
+			heartElement.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+			heartElement.style.transform = 'scale(1.6)';
+			
+			// 2. Вылетают сердечки
+			createHeartBurstEffect(heartElement);
+			
+			// 3. Показываем случайный комплимент
+			showRandomComplimentToast();
+			
+			// Возвращаем сердце в обычное состояние
+			setTimeout(() => {
+				heartElement.style.transition = 'transform 0.6s ease';
+				heartElement.style.transform = 'scale(1)';
+			}, 600);
+		}
+
+		function createHeartBurstEffect(element) {
+			const rect = element.getBoundingClientRect();
+			const centerX = rect.left + rect.width / 2;
+			const centerY = rect.top + rect.height / 2;
+
+			const hearts = ['❤️', '💖', '💗', '💕', '🩷'];
+
+			for (let i = 0; i < 18; i++) {
+				setTimeout(() => {
+					const heart = document.createElement('div');
+					heart.style.position = 'fixed';
+					heart.style.left = `${centerX}px`;
+					heart.style.top = `${centerY}px`;
+					heart.style.fontSize = `${Math.random() * 1.8 + 1.4}rem`;
+					heart.style.zIndex = '99999';
+					heart.style.pointerEvents = 'none';
+					heart.style.transition = `all ${Math.random() * 1.2 + 1.3}s ease`;
+					heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+					
+					document.body.appendChild(heart);
+					
+					// Разлёт в разные стороны
+					const angle = Math.random() * Math.PI * 2;
+					const distance = Math.random() * 180 + 120;
+					
+					setTimeout(() => {
+						heart.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+						heart.style.opacity = '0';
+					}, 50);
+					
+					setTimeout(() => {
+						heart.remove();
+					}, 2000);
+				}, i * 25);
+			}
+		}
+		// === СКОЛЬКО РАЗ Я ДУМАЛ О ТЕБЕ СЕГОДНЯ ===
+		function updateThoughtsCounter() {
+			// Генерируем случайное число от 35 до 140
+			const count = Math.floor(Math.random() * 106) + 35;
+			
+			const countElement = document.getElementById('thoughtsCount');
+			if (countElement) {
+				countElement.innerText = count;
+			}
+		}
+		
+		// === ГОЛОСОВОЕ СООБЩЕНИЕ (С ПРИОСТАНОВКОЙ ФОНОВОЙ МУЗЫКИ) ===
+		let wasMusicPlaying = false; // запоминаем, играла ли фоновая музыка
+
+		function playVoiceMessage() {
+			const voiceAudio = document.getElementById('voiceMessage');
+			const bgMusic = document.getElementById('bgMusic');
+
+			if (!voiceAudio) {
+				alert('Аудио элемент не найден');
+				return;
+			}
+
+			if (voiceAudio.paused) {
+				// Запоминаем, играла ли фоновая музыка
+				wasMusicPlaying = !bgMusic.paused;
+
+				// Приостанавливаем фоновую музыку
+				if (wasMusicPlaying) {
+					bgMusic.pause();
+				}
+				
+				voiceAudio.volume = 1.0;
+
+				// Запускаем голосовое сообщение
+				voiceAudio.play()
+					.then(() => {
+						console.log('Голосовое сообщение воспроизводится');
+					})
+					.catch((err) => {
+						console.error(err);
+						alert('Не удалось воспроизвести голосовое сообщение');
+					});
+
+				// Когда голосовое закончится — возвращаем фоновую музыку
+				voiceAudio.onended = () => {
+					if (wasMusicPlaying) {
+						bgMusic.play().catch(() => {});
+					}
+					wasMusicPlaying = false;
+				};
+
+			} else {
+				// Если нажали во время воспроизведения — останавливаем голосовое
+				voiceAudio.pause();
+				voiceAudio.currentTime = 0;
+
+				// Возвращаем фоновую музыку, если она играла до этого
+				if (wasMusicPlaying) {
+					bgMusic.play().catch(() => {});
+				}
+				wasMusicPlaying = false;
+			}
+		}
+		// === ТЁМНЫЙ РОМАНТИЧНЫЙ РЕЖИМ (УЛУЧШЕННЫЙ) ===
+		const themeToggle = document.getElementById('themeToggle');
+		const themeIcon = document.getElementById('themeIcon');
+		const themeText = document.getElementById('themeText');
+
+		let isDark = localStorage.getItem('darkTheme') === 'true';
+
+		if (isDark) {
+			document.body.classList.add('dark-theme');
+			themeIcon.textContent = '☀️';
+			themeText.textContent = 'Светлая тема';
+		}
+
+		themeToggle.addEventListener('click', () => {
+			isDark = !isDark;
+			
+			if (isDark) {
+				document.body.classList.add('dark-theme');
+				themeIcon.textContent = '☀️';
+				themeText.textContent = 'Светлая тема';
+				localStorage.setItem('darkTheme', 'true');
+			} else {
+				document.body.classList.remove('dark-theme');
+				themeIcon.textContent = '🌙';
+				themeText.textContent = 'Тёмная тема';
+				localStorage.setItem('darkTheme', 'false');
+			}
+		});
+		// === КРАСИВЫЕ СЕРДЕЧКИ ПРИ ОТКРЫТИИ КОНВЕРТА ===
+		function createEnvelopeOpenHearts() {
+			const hearts = ['❤️', '💖', '💗', '🩷', '💝'];
+			
+			for (let i = 0; i < 25; i++) {
+				setTimeout(() => {
+					const heart = document.createElement('div');
+					heart.style.position = 'fixed';
+					heart.style.left = `${Math.random() * 100}vw`;
+					heart.style.top = `${40 + Math.random() * 30}vh`;
+					heart.style.fontSize = `${Math.random() * 1.8 + 1.6}rem`;
+					heart.style.zIndex = '9999';
+					heart.style.pointerEvents = 'none';
+					heart.style.transition = `all ${Math.random() * 1.2 + 1.4}s ease`;
+					heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+					
+					document.body.appendChild(heart);
+					
+					setTimeout(() => {
+						heart.style.transform = `translateY(-${Math.random() * 200 + 150}px)`;
+						heart.style.opacity = '0';
+					}, 50);
+					
+					setTimeout(() => {
+						heart.remove();
+					}, 2200);
+				}, i * 18);
+			}
+		}
+		// === КАСТОМНЫЙ КУРСОР (отключён на мобильных) ===
+		const customCursor = document.getElementById('customCursor');
+
+		const isMobileDevice = () => {
+			return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+				   || window.innerWidth < 768;
+		};
+
+		if (customCursor && !isMobileDevice()) {
+			document.body.classList.add('custom-cursor');
+			customCursor.style.display = 'block';
+
+			document.addEventListener('mousemove', (e) => {
+				customCursor.style.left = `${e.clientX}px`;
+				customCursor.style.top = `${e.clientY}px`;
+			});
+
+			document.addEventListener('mousedown', () => {
+				customCursor.style.transform = 'scale(0.7)';
+			});
+
+			document.addEventListener('mouseup', () => {
+				customCursor.style.transform = 'scale(1)';
+			});
+		}
+		// === НАШЕ СОЗВЕЗДИЕ (полная адаптивная версия) ===
+		function initConstellation() {
+			const canvas = document.getElementById('constellationCanvas');
+			if (!canvas) return;
+
+			const isMobile = window.innerWidth < 768;
+
+			// Адаптивный размер canvas
+			if (isMobile) {
+				canvas.width = Math.min(340, window.innerWidth - 40);
+				canvas.height = 240;
+			} else {
+				canvas.width = 600;
+				canvas.height = 400;
+			}
+
+			const ctx = canvas.getContext('2d');
+			let stars = [];
+
+			function createStars() {
+				stars = [];
+
+				// Фоновые звёзды
+				for (let i = 0; i < (isMobile ? 50 : 90); i++) {
+					stars.push({
+						x: Math.random() * canvas.width,
+						y: Math.random() * canvas.height,
+						size: Math.random() * 1.6 + 0.5,
+						opacity: Math.random() * 0.7 + 0.3,
+						twinkleSpeed: Math.random() * 0.04 + 0.015
+					});
+				}
+
+				// Две большие звезды с буквой "А"
+				stars.push({
+					x: isMobile ? 100 : 170,
+					y: isMobile ? 100 : 170,
+					size: isMobile ? 5 : 7,
+					opacity: 1,
+					isBig: true,
+					label: 'Арина'
+				});
+
+				stars.push({
+					x: isMobile ? 240 : 430,
+					y: isMobile ? 150 : 230,
+					size: isMobile ? 5 : 7,
+					opacity: 1,
+					isBig: true,
+					label: 'Саша'
+				});
+			}
+
+			function draw() {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				ctx.fillStyle = '#0f0a08';
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+				// Рисуем обычные звёзды
+				stars.forEach(star => {
+					if (!star.isBig) {
+						ctx.save();
+						ctx.globalAlpha = star.opacity;
+						ctx.fillStyle = '#fefce8';
+						ctx.beginPath();
+						ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+						ctx.fill();
+						ctx.restore();
+
+						// Мерцание
+						star.opacity += Math.sin(Date.now() * star.twinkleSpeed) * 0.025;
+						if (star.opacity > 1) star.opacity = 1;
+						if (star.opacity < 0.25) star.opacity = 0.25;
+					}
+				});
+
+				// Рисуем две большие звезды
+				const bigStars = stars.filter(s => s.isBig);
+
+				bigStars.forEach(star => {
+					// Свечение
+					ctx.fillStyle = 'rgba(254, 215, 170, 0.3)';
+					ctx.beginPath();
+					ctx.arc(star.x, star.y, star.size * 3.5, 0, Math.PI * 2);
+					ctx.fill();
+
+					// Звезда
+					ctx.fillStyle = '#fff7ed';
+					ctx.beginPath();
+					ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+					ctx.fill();
+
+					// Буква "А"
+					// Буква "А" (более яркая и читаемая)
+					ctx.fillStyle = '#1c0f08';           // Тёмный цвет для лучшей читаемости
+					ctx.strokeStyle = '#fff7ed';         // Светлая обводка
+					ctx.lineWidth = 3;
+					ctx.font = isMobile ? 'bold 17px Poppins' : 'bold 24px Poppins';
+					ctx.textAlign = 'center';
+					ctx.textBaseline = 'middle';
+
+					// Сначала обводка, потом заливка (для лучшей читаемости)
+					ctx.strokeText(star.label, star.x, star.y);
+					ctx.fillText(star.label, star.x, star.y);
+				});
+
+				// Линия между двумя звёздами
+				if (bigStars.length === 2) {
+					const pulse = Math.sin(Date.now() / 400) * 0.3 + 0.7;
+					ctx.strokeStyle = `rgba(254, 215, 170, ${pulse * 0.9})`;
+					ctx.lineWidth = isMobile ? 2 : 3;
+					ctx.beginPath();
+					ctx.moveTo(bigStars[0].x, bigStars[0].y);
+					ctx.lineTo(bigStars[1].x, bigStars[1].y);
+					ctx.stroke();
+				}
+			}
+
+			function animate() {
+				draw();
+				requestAnimationFrame(animate);
+			}
+
+			let brightness = 1; // яркость звёзд
+
+				// Клик по созвездию
+				canvas.addEventListener('click', (e) => {
+					e.stopImmediatePropagation(); // предотвращает вылет сердечек
+
+					brightness = 2.2; // звёзды становятся ярче
+
+					setTimeout(() => {
+						brightness = 1;
+					}, 900);
+				});
+
+			createStars();
+			animate();
+		}
+		window.addEventListener('load', () => {
+			initConstellation();
+		});
+				
+		// === ПРОСТОЕ И СТАБИЛЬНОЕ СОХРАНЕНИЕ (только дизайн) ===
+		function savePostcard() {
+			const postcard = document.getElementById('postcard');
+			
+			if (!postcard) {
+				alert('Ошибка: не найден элемент открытки');
+				return;
+			}
+
+			// Показываем загрузку
+			const loading = document.createElement('div');
+			loading.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#334155;color:white;padding:12px 24px;border-radius:9999px;z-index:99999;';
+			loading.textContent = 'Сохраняем открытку...';
+			document.body.appendChild(loading);
+
+			// === Всегда скрываем все изображения ===
+			const images = postcard.querySelectorAll('img');
+			const originalDisplay = [];
+			
+			images.forEach((img, i) => {
+				originalDisplay[i] = img.style.display;
+				img.style.display = 'none';
+			});
+
+			html2canvas(postcard, {
+				scale: 2.5,
+				backgroundColor: '#ffffff',
+				logging: false
+			}).then(function(canvas) {
+				// Возвращаем изображения обратно
+				images.forEach((img, i) => {
+					img.style.display = originalDisplay[i];
+				});
+
+				loading.remove();
+
+				// Скачиваем файл
+				const link = document.createElement('a');
+				link.download = 'Открытка_для_Ариночки.png';
+				link.href = canvas.toDataURL('image/png');
+				link.click();
+
+				// Уведомление об успехе
+				const success = document.createElement('div');
+				success.style.cssText = `
+					position: fixed;
+					bottom: 30px;
+					left: 50%;
+					transform: translateX(-50%);
+					background: #10b981;
+					color: white;
+					padding: 14px 28px;
+					border-radius: 9999px;
+					box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+					z-index: 99999;
+					text-align: center;
+					line-height: 1.4;
+				`;
+				success.innerHTML = `
+					✅ <strong>Открытка успешно сохранена!</strong><br>
+					<span style="font-size: 13px; opacity: 0.9;">Фото можно сохранить отдельно (правой кнопкой на фото)</span>
+				`;
+				document.body.appendChild(success);
+
+				setTimeout(() => {
+					success.style.transition = 'all 0.5s ease';
+					success.style.opacity = '0';
+					setTimeout(() => success.remove(), 400);
+				}, 3200);
+				
+				setTimeout(() => {
+					success.style.transition = 'all 0.4s ease';
+					success.style.opacity = '0';
+					setTimeout(() => success.remove(), 300);
+				}, 2800);
+
+			}).catch(function(error) {
+				images.forEach((img, i) => img.style.display = originalDisplay[i]);
+				loading.remove();
+				console.error(error);
+				alert('Не удалось сохранить открытку.');
+			});
+		}
+
+		// Запускаем при загрузке страницы
+		updateThoughtsCounter();
+
+	</script>
+
+
+</body>
+</html>
